@@ -10,351 +10,22 @@
     <title>PASE: Leveraging the Phonological Prior of WavLM for Low-Hallucination Generative Speech Enhancement</title>
 
     <!-- 引入Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-    <style>
-        /* 全局样式 */
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
-            color: #2d3748;
-            line-height: 1.7;
-            min-height: 100vh;
-        }
-
-        /* 页头样式 */
-        .header {
-            background: linear-gradient(135deg, #fefce8 0%, #fef3c7 50%, #fef9c3 100%);
-            color: #1e293b;
-            padding: 60px 20px;
-            text-align: center;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            border-bottom: 1px solid #fbbf24;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #f59e0b, #eab308, #f59e0b);
-        }
-
-        .header h1 {
-            margin: 0 0 20px 0;
-            font-family: 'Playfair Display', serif;
-            font-size: 2.8rem;
-            font-weight: 700;
-            line-height: 1.2;
-            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        .header p {
-            margin: 8px 0 0;
-            font-size: 1.3rem;
-            font-weight: 400;
-            opacity: 0.9;
-        }
-
-        .header .affiliation {
-            font-size: 1.1rem;
-            opacity: 0.8;
-            margin-top: 15px;
-        }
-
-        /* 按钮样式 */
-        .btn-container {
-            text-align: center;
-            padding: 30px 20px;
-            background: rgba(255, 255, 255, 0.6);
-            backdrop-filter: blur(10px);
-            margin: 0 auto;
-            max-width: 600px;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        }
-
-        .btn {
-            background: linear-gradient(135deg, #f59e0b 0%, #eab308 100%);
-            color: white;
-            padding: 14px 32px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 16px;
-            font-weight: 600;
-            margin: 8px 12px;
-            cursor: pointer;
-            border-radius: 12px;
-            border: none;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(245, 158, 11, 0.4);
-            background: linear-gradient(135deg, #eab308 0%, #f59e0b 100%);
-        }
-
-        /* 主要内容容器 */
-        .narrow-container {
-            max-width: 1400px;
-            margin: 40px auto;
-            padding: 40px;
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
-            border-radius: 24px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        /* 文件区块样式 */
-        .file-section {
-            margin-bottom: 60px;
-            background: white;
-            border-radius: 20px;
-            padding: 30px;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
-            border: 1px solid #f1f5f9;
-        }
-
-        .file-header {
-            text-align: center;
-            margin-bottom: 40px;
-        }
-
-        .file-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 28px;
-            font-weight: 600;
-            color: #1e293b;
-            background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
-            padding: 20px 40px;
-            border-radius: 16px;
-            display: inline-block;
-            border: 2px solid #fbbf24;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        /* 音频卡片网格布局 */
-        .audio-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .audio-card {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-radius: 16px;
-            padding: 25px;
-            text-align: center;
-            border: 1px solid #e2e8f0;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-
-        .audio-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
-            border-color: #f59e0b;
-        }
-
-        .card-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #475569;
-            margin-bottom: 20px;
-            padding-bottom: 12px;
-            border-bottom: 2px solid #f1f5f9;
-        }
-
-        .card-image {
-            margin-bottom: 20px;
-        }
-
-        .card-image img {
-            width: 100%;
-            max-width: 350px;
-            height: auto;
-            border-radius: 12px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .audio-card:hover .card-image img {
-            transform: scale(1.02);
-        }
-
-        .card-audio {
-            margin-top: 15px;
-        }
-
-        .card-audio audio {
-            width: 100%;
-            border-radius: 25px;
-            outline: none;
-        }
-
-        .card-audio audio::-webkit-media-controls-panel {
-            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
-            border-radius: 25px;
-        }
-
-        /* 第二行样式 */
-        .audio-grid.second-row {
-            margin-bottom: 0;
-        }
-
-        /* 引用样式 */
-        .citation {
-            margin-top: 60px;
-            padding: 30px;
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
-            border-left: 6px solid #f59e0b;
-            border-radius: 16px;
-            font-size: 0.95rem;
-            color: #475569;
-            line-height: 1.6;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
-        }
-
-        .citation p {
-            margin: 0;
-        }
-
-        /* 响应式设计 */
-        @media (max-width: 1200px) {
-            .header h1 {
-                font-size: 2.4rem;
-            }
-            
-            .narrow-container {
-                margin: 20px;
-                padding: 30px;
-            }
-            
-            .audio-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 25px;
-            }
-        }
-
-        @media (max-width: 768px) {
-            .header {
-                padding: 40px 20px;
-            }
-            
-            .header h1 {
-                font-size: 2rem;
-            }
-
-            .header p {
-                font-size: 1.1rem;
-            }
-
-            .file-section {
-                padding: 20px;
-                margin-bottom: 40px;
-            }
-
-            .file-title {
-                font-size: 22px;
-                padding: 15px 30px;
-            }
-
-            .audio-grid {
-                grid-template-columns: 1fr;
-                gap: 20px;
-            }
-
-            .btn {
-                padding: 12px 24px;
-                margin: 6px 8px;
-                display: block;
-                width: 200px;
-                margin-left: auto;
-                margin-right: auto;
-            }
-        }
-
-        @media (max-width: 480px) {
-            .header h1 {
-                font-size: 1.7rem;
-            }
-            
-            .narrow-container {
-                margin: 10px;
-                padding: 20px;
-            }
-            
-            .file-section {
-                padding: 15px;
-            }
-            
-            .file-title {
-                font-size: 20px;
-                padding: 12px 20px;
-            }
-            
-            .audio-card {
-                padding: 20px;
-            }
-        }
-
-        /* 动画效果 */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .file-section {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        .file-section:nth-child(2) { animation-delay: 0.1s; }
-        .file-section:nth-child(3) { animation-delay: 0.2s; }
-        .file-section:nth-child(4) { animation-delay: 0.3s; }
-        .file-section:nth-child(5) { animation-delay: 0.4s; }
-
-        /* 滚动条样式 */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: #f1f5f9;
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: #94a3b8;
-        }
-    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Source+Serif+Pro:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <!-- 引入CSS文件 -->
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
     <!-- 页头 -->
     <div class="header">
         <h1>PASE: Leveraging the Phonological Prior of WavLM<br>for Low-Hallucination Generative Speech Enhancement</h1>
-        <p>Xiaobin Rong, Qinwe Hu, Mansur Yesilbursa, Kamil Wojcicki, Jing Lu</p>
-        <p class="affiliation">Key Laboratory of Modern Acoustics, Nanjing University<br>Collaboration AI, Cisco Systems, Inc.</p>
+        <div class="authors">
+            Xiaobin Rong<sup>1,2</sup>, Qinwe Hu<sup>1,2</sup>, Mansur Yesilbursa<sup>2</sup>, Kamil Wojcicki<sup>2</sup>, Jing Lu<sup>1</sup>
+        </div>
+        <div class="affiliations">
+            <sup>1</sup>Key Laboratory of Modern Acoustics, Nanjing University<br>
+            <sup>2</sup>Collaboration AI, Cisco Systems, Inc.
+        </div>
     </div>
 
     <!-- 代码 & paper -->
@@ -363,8 +34,30 @@
         <a class="btn" href="https://arxiv.org/abs/xxx.xxx">📄 ArXiv Paper</a>
     </div>
 
-    <!-- 主要内容 -->
+    <!-- Abstract Section -->
     <div class="narrow-container">
+        <div class="abstract-section">
+            <h2>Abstract</h2>
+            <div class="abstract-content">
+                <div class="abstract-text">
+                    <p>We propose PASE, a novel generative speech enhancement framework that leverages the phonological prior of WavLM to achieve low-hallucination performance. Traditional generative speech enhancement methods often suffer from hallucination issues, where the model generates non-existent audio content. Our approach addresses this challenge by incorporating phonological constraints from pre-trained WavLM models.</p>
+                    
+                    <p>PASE effectively suppresses hallucination artifacts while maintaining high speech quality and intelligibility. Experimental results demonstrate that our method outperforms state-of-the-art approaches across multiple metrics, particularly in hallucination reduction and speech naturalness preservation.</p>
+                    
+                    <p><strong>Keywords:</strong> Speech Enhancement, Generative Models, Hallucination Reduction, Phonological Prior, WavLM</p>
+                </div>
+                <div class="framework-image">
+                    <img src="model_framework.png" alt="PASE Model Framework">
+                    <div class="image-caption">Figure 1: Overall architecture of the proposed PASE framework.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Audio Demos Section -->
+    <div class="narrow-container">
+        <div class="section-title">Audio Demos</div>
+        
         <!-- File ID 1 -->
         <div class="file-section">
             <div class="file-header">
@@ -545,8 +238,7 @@
             </div>
         </div>
 
-        <!-- 其他File ID部分结构相同，可以继续添加 -->
-        <!-- File ID 3, 4, 5... -->
+        <!-- 其他File ID部分可以继续添加 -->
 
         <!-- 引用 -->
         <div class="citation">
