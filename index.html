@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="UL-UNAS: An Ultra-Lightweight U-Net for Real-Time Speech Enhancement.">
+    <meta name="author" content="Xiaobin-Rong">
+
+    <title>UL-UNAS: Ultra-Lightweight U-Nets for Real-Time Speech Enhancement via Network Architecture Search</title>
+
+    <style>
+        /* 全局样式 */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* 页头样式 */
+        .header {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 2.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            margin: 10px 0 0;
+            font-size: 1.2rem;
+            font-weight: 300;
+        }
+
+	/* 按键样式 */
+	.btn {
+    	    background-color: #4CAF50; /* Green */
+    	    color: white;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+	.btn-primary {
+    	    background-color: #45a049; /* Dark Green */
+	}
+
+	.btn-primary:hover {
+            background-color: #388E3C; /* Darker Green */
+ 	}
+
+	.btn:hover {
+    	    background-color: #66BB6A; /* Light Green */
+	}
+
+        /* 自定义 ID 样式 */
+        .id-cell {
+            font-family: 'Arial', sans-serif; /* 更改字体 */
+            font-size: 18px; /* 调整字体大小 */
+            font-weight: bold; /* 加粗 */
+            color: black; /* 更改颜色 */
+            text-align: center; /* 居中显示 */
+            background-color: #A5D6A7; /* 添加背景色 */
+            padding: 10px; /* 增加内边距 */
+            border-radius: 5px; /* 圆角效果 */
+        }
+
+        /* 主要内容容器 */
+        .narrow-container {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        /* 表格样式 */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            font-weight: bold;
+        }
+
+        tr:hover {
+            background-color: #f1f1f1;
+        }
+
+        /* 图片样式 */
+        .image img {
+            width: 100%;
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 音频控件样式 */
+        .audio audio {
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        /* 引用样式 */
+        .citation {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-left: 4px solid #4CAF50;
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .header p {
+                font-size: 1rem;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 页头 -->
+    <div class="header">
+        <h1>UL-UNAS: Ultra-Lightweight U-Nets for Real-Time Speech Enhancement <br> via Neural Architecture Search</h1>
+        <p>Xiaobin Rong, Dahan Wang, Yuxiang Hu, Changbao Zhu, Kai Chen, Jing Lu</p>
+        <p>Nanjing University | NJU-Horizon Intelligent Audio Lab, Horizon Robotics</p>
+    </div>
+
+    <!-- 代码 & paper -->
+    <p align="center">
+	       <a class="btn btn-primary" href="https://github.com/Xiaobin-Rong/ul-unas">Code</a>
+               <a class="btn btn-primary" href="https://arxiv.org/abs/2503.00340">ArXiv</a>
+    </p>
+
+    <!-- 主要内容 -->
+    <div class="narrow-container">
+        <div class="comparisons-desktop">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Noisy signal</th>
+                        <th>Enhanced signal by GTCRN [1]</th>
+                        <th>Enhanced signal by UL-UNAS</th>
+                        <th>Clean signal</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- 示例行 -->
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0043.jpg" alt="Noisy 0043">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0043.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0043.jpg" alt="GTCRN Enhanced 0043">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0043.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0043.jpg" alt="UL-UNAS Enhanced 0043">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0043.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0043.jpg" alt="Clean 0043">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0043.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+                    <!-- 其他行省略 -->
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0066.jpg" alt="Noisy 0066">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0066.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0066.jpg" alt="GTCRN Enhanced 0066">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0066.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0066.jpg" alt="UL-UNAS Enhanced 0066">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0066.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0066.jpg" alt="Clean 0066">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0066.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0106.jpg" alt="Noisy 0106">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0106.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0106.jpg" alt="GTCRN Enhanced 0106">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0106.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0106.jpg" alt="UL-UNAS Enhanced 0106">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0106.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0106.jpg" alt="Clean 0106">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0106.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0119.jpg" alt="Noisy 0119">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0119.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0119.jpg" alt="GTCRN Enhanced 0119">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0119.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0119.jpg" alt="UL-UNAS Enhanced 0119">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0119.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0119.jpg" alt="Clean 0119">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0119.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0121.jpg" alt="Noisy 0121">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0121.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0121.jpg" alt="GTCRN Enhanced 0121">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0121.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0121.jpg" alt="UL-UNAS Enhanced 0121">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0121.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0121.jpg" alt="Clean 0121">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0121.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0149.jpg" alt="Noisy 0149">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0149.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0149.jpg" alt="GTCRN Enhanced 0149">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0149.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0149.jpg" alt="UL-UNAS Enhanced 0149">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0149.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0149.jpg" alt="Clean 0149">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0149.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0169.jpg" alt="Noisy 0169">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0169.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0169.jpg" alt="GTCRN Enhanced 0169">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0169.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0169.jpg" alt="UL-UNAS Enhanced 0169">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0169.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0169.jpg" alt="Clean 0169">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0169.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0170.jpg" alt="Noisy 0170">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0170.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0170.jpg" alt="GTCRN Enhanced 0170">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0170.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0170.jpg" alt="UL-UNAS Enhanced 0170">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0170.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0170.jpg" alt="Clean 0170">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0170.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/noisy/0174.jpg" alt="Noisy 0174">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/noisy/0174.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/gtcrn_enh/0174.jpg" alt="GTCRN Enhanced 0174">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/gtcrn_enh/0174.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/ulunas_enh/0174.jpg" alt="UL-UNAS Enhanced 0174">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/ulunas_enh/0174.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="image">
+                                <img src="audio_examples/clean/0174.jpg" alt="Clean 0174">
+                            </div>
+                            <div class="audio">
+                                <audio controls>
+                                    <source src="audio_examples/clean/0174.wav" type="audio/wav">
+                                    Your browser does not support the audio element.
+                                </audio>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 引用 -->
+        <div class="citation">
+            <p>
+                [1] Rong, X., Sun, T., Zhang, X., Hu, Y., Zhu, C., Lu, J., 2024. GTCRN: A Speech Enhancement Model Requiring Ultralow Computational Resources, in: ICASSP 2024 - 2024 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP), pp. 971–975.
+            </p>
+        </div>
+    </div>
+</body>
+</html>
