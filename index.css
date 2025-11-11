@@ -116,11 +116,8 @@ body {
     padding-bottom: 10px;
 }
 
-.abstract-content {
-    display: block;
-}
-
 .abstract-text {
+    font-family: 'Times New Roman', Times, serif;
     font-size: 1.1rem;
     line-height: 1.7;
     color: #4b5563;
@@ -137,22 +134,9 @@ body {
     text-indent: 0;
 }
 
-.keywords {
-    text-indent: 0 !important;
-    margin-top: 25px;
-    padding-top: 15px;
-    border-top: 1px solid #e5e7eb;
-    font-style: italic;
-}
-
-.abstract-text strong {
-    color: #1e293b;
-    font-weight: 700;
-}
-
 .framework-image {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 30px;
 }
 
 .framework-image img {
@@ -164,6 +148,7 @@ body {
 }
 
 .image-caption {
+    font-family: 'Times New Roman', Times, serif;
     font-size: 0.95rem;
     color: #6b7280;
     margin-top: 12px;
