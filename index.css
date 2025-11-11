@@ -106,54 +106,120 @@ body {
 }
 
 /* Abstract Section */
+/* Abstract Section */
 .abstract-section h2 {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 2rem;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 28px;
+    font-weight: 700;
     color: #1e293b;
-    margin-bottom: 25px;
     text-align: center;
-    border-bottom: 2px solid #f59e0b;
-    padding-bottom: 10px;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 3px solid #f59e0b;
+    letter-spacing: 0.5px;
+}
+
+.abstract-content {
+    max-width: 900px;
+    margin: 0 auto;
 }
 
 .abstract-text {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 1.1rem;
-    line-height: 1.7;
-    color: #4b5563;
-    margin-bottom: 30px;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 17px;
+    line-height: 1.8;
+    color: #374151;
+    margin-bottom: 35px;
     text-align: justify;
 }
 
 .abstract-text p {
-    margin-bottom: 18px;
+    margin-bottom: 22px;
     text-indent: 2em;
 }
 
-.abstract-text p:first-child {
+.abstract-text .first-paragraph {
     text-indent: 0;
+    font-size: 18px;
+    line-height: 1.9;
+}
+
+.abstract-text .last-paragraph {
+    margin-bottom: 0;
+}
+
+.framework-container {
+    text-align: center;
+    margin-top: 40px;
+    padding-top: 30px;
+    border-top: 2px solid #e5e7eb;
 }
 
 .framework-image {
-    text-align: center;
-    margin-top: 30px;
+    margin-bottom: 15px;
 }
 
 .framework-image img {
     width: 100%;
-    max-width: 800px;
+    max-width: 750px;
     height: auto;
-    border: 1px solid #e5e7eb;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    border: 1px solid #d1d5db;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    border-radius: 4px;
 }
 
 .image-caption {
-    font-family: 'Times New Roman', Times, serif;
-    font-size: 0.95rem;
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16px;
     color: #6b7280;
-    margin-top: 12px;
     font-style: italic;
     text-align: center;
+    line-height: 1.5;
+}
+
+.image-caption strong {
+    color: #374151;
+    font-weight: 600;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .abstract-text {
+        font-size: 16px;
+        line-height: 1.7;
+        text-align: left;
+    }
+    
+    .abstract-text p {
+        text-indent: 1.5em;
+    }
+    
+    .abstract-text .first-paragraph {
+        font-size: 16px;
+    }
+    
+    .framework-image img {
+        max-width: 100%;
+    }
+    
+    .abstract-section h2 {
+        font-size: 24px;
+    }
+}
+
+@media (max-width: 480px) {
+    .abstract-text {
+        font-size: 15px;
+        line-height: 1.6;
+    }
+    
+    .abstract-text p {
+        text-indent: 1em;
+    }
+    
+    .image-caption {
+        font-size: 14px;
+    }
 }
 
 /* Section Title */
