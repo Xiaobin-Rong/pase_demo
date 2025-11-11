@@ -40,11 +40,7 @@
             <h2>Abstract</h2>
             <div class="abstract-content">
                 <div class="abstract-text">
-                    <p>We propose PASE, a novel generative speech enhancement framework that leverages the phonological prior of WavLM to achieve low-hallucination performance. Traditional generative speech enhancement methods often suffer from hallucination issues, where the model generates non-existent audio content. Our approach addresses this challenge by incorporating phonological constraints from pre-trained WavLM models.</p>
-                    
-                    <p>PASE effectively suppresses hallucination artifacts while maintaining high speech quality and intelligibility. Experimental results demonstrate that our method outperforms state-of-the-art approaches across multiple metrics, particularly in hallucination reduction and speech naturalness preservation.</p>
-                    
-                    <p><strong>Keywords:</strong> Speech Enhancement, Generative Models, Hallucination Reduction, Phonological Prior, WavLM</p>
+                    <p>Generative models have shown remarkable performance in speech enhancement (SE), achieving superior perceptual quality over traditional discriminative approaches. However, existing generative SE approaches often overlook the risk of hallucination under severe noise, leading to incorrect spoken content or inconsistent speaker characteristics, which we term linguistic and acoustic hallucinations, respectively. We argue that linguistic hallucination, stemming from models' failure to constrain valid phonological structures, is the more fundamental challenge. While language models (LMs) are well-suited for capturing the underlying speech structure through modeling the distribution of discrete tokens, existing approaches are limited in learning from noise-corrupted representations, which can lead to contaminated priors and hallucinations. To overcome these limitations, we propose the Phonologically Anchored Speech Enhancer (PASE), a generative SE framework that leverages the robust phonological prior embedded in the pre-trained WavLM model to mitigate hallucinations. First, we adapt WavLM into a denoising expert via representation distillation to clean its final-layer features. Guided by the model's intrinsic phonological prior, this process enables robust denoising with a strong resistance to linguistic hallucination. To further reduce acoustic hallucinations, we train the vocoder with a dual-stream representation: the high-level phonetic representation provides clean linguistic content, while a low-level acoustic representation retains speaker identity and prosody. Experimental results demonstrate that PASE not only surpasses state-of-the-art discriminative models in perceptual quality, but also significantly outperforms prior generative models with substantially lower linguistic and acoustic hallucinations.                    
                 </div>
                 <div class="framework-image">
                     <img src="model_framework.png" alt="PASE Model Framework">
@@ -239,7 +235,273 @@
         </div>
 
         <!-- 其他File ID部分可以继续添加 -->
+        <!-- File ID 2 -->
+        <div class="file-section">
+            <div class="file-header">
+                <div class="file-title">File ID 3</div>
+            </div>
+            
+            <div class="audio-grid">
+                <div class="audio-card">
+                    <div class="card-title">Noisy Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_3_Noisy.png" alt="Noisy 3">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_3_Noisy.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by TF-GridNet [1]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_3_TFGridNet.png" alt="TF-GridNet Enhanced 3">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_3_TFGridNet.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by LLaSE-G1 [2]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_3_LLaSE-G1.png" alt="LLaSE-G1 Enhanced 3">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_3_LLaSE-G1.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="audio-grid second-row">
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by AES-V2 [3]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_3_AES-V2.png" alt="AES-V2 Enhanced 3">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_3_AES-V2.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by PASE (Ours)</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_3_PASE(ours).png" alt="PASE Enhanced 3">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_3_PASE(ours).wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Clean Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_3_Clean.png" alt="Clean 3">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_3_Clean.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
 
+        <!-- File ID 24-->
+        <div class="file-section">
+            <div class="file-header">
+                <div class="file-title">File ID 4</div>
+            </div>
+            
+            <div class="audio-grid">
+                <div class="audio-card">
+                    <div class="card-title">Noisy Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_4_Noisy.png" alt="Noisy 4">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_4_Noisy.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by TF-GridNet [1]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_4_TFGridNet.png" alt="TF-GridNet Enhanced 4">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_4_TFGridNet.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by LLaSE-G1 [2]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_4_LLaSE-G1.png" alt="LLaSE-G1 Enhanced 4">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_4_LLaSE-G1.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="audio-grid second-row">
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by AES-V2 [3]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_4_AES-V2.png" alt="AES-V2 Enhanced 4">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_4_AES-V2.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by PASE (Ours)</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_4_PASE(ours).png" alt="PASE Enhanced 4">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_4_PASE(ours).wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Clean Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_4_Clean.png" alt="Clean 4">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_4_Clean.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- File ID 5 -->
+        <div class="file-section">
+            <div class="file-header">
+                <div class="file-title">File ID 5</div>
+            </div>
+            
+            <div class="audio-grid">
+                <div class="audio-card">
+                    <div class="card-title">Noisy Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_5_Noisy.png" alt="Noisy 5">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_2_Noisy.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by TF-GridNet [1]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_5_TFGridNet.png" alt="TF-GridNet Enhanced 5">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_5_TFGridNet.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by LLaSE-G1 [2]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_5_LLaSE-G1.png" alt="LLaSE-G1 Enhanced 5">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_5_LLaSE-G1.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="audio-grid second-row">
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by AES-V2 [3]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_5_AES-V2.png" alt="AES-V2 Enhanced 5">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_5_AES-V2.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by PASE (Ours)</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_5_PASE(ours).png" alt="PASE Enhanced 5">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_5_PASE(ours).wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Clean Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_5_Clean.png" alt="Clean 5">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_5_Clean.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
         <!-- 引用 -->
         <div class="citation">
             <p>
