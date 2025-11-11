@@ -142,7 +142,7 @@ body {
 
 .framework-image img {
     width: 100%;
-    max-width: 800px;
+    max-width: 1200px;
     height: auto;
     border: 1px solid #e5e7eb;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
