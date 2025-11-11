@@ -103,25 +103,6 @@
             background: linear-gradient(135deg, #eab308 0%, #f59e0b 100%);
         }
 
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        /* 自定义 ID 样式 */
-        .id-cell {
-            font-family: 'Playfair Display', serif;
-            font-size: 20px;
-            font-weight: 600;
-            color: #1e293b;
-            text-align: center;
-            background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
-            padding: 16px;
-            border-radius: 12px;
-            margin: 20px 0;
-            border: 1px solid #fbbf24;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
         /* 主要内容容器 */
         .narrow-container {
             max-width: 1400px;
@@ -134,88 +115,111 @@
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
-        /* 表格样式 */
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0;
-            margin: 30px 0;
+        /* 文件区块样式 */
+        .file-section {
+            margin-bottom: 60px;
             background: white;
-            border-radius: 16px;
-            overflow: hidden;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-        }
-
-        th, td {
-            padding: 20px;
-            text-align: center;
-            border-bottom: 1px solid #f1f5f9;
-        }
-
-        th {
-            background: linear-gradient(135deg, #475569 0%, #334155 100%);
-            color: white;
-            font-weight: 600;
-            font-size: 15px;
-            letter-spacing: 0.5px;
-        }
-
-        tr:last-child td {
-            border-bottom: none;
-        }
-
-        tr:hover {
-            background-color: #f8fafc;
-            transition: background-color 0.2s ease;
-        }
-
-        /* 图片样式 */
-        .image {
-            padding: 15px;
-            background: white;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
             border: 1px solid #f1f5f9;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .image:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+        .file-header {
+            text-align: center;
+            margin-bottom: 40px;
         }
 
-        .image img {
+        .file-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #1e293b;
+            background: linear-gradient(135deg, #fef3c7 0%, #fef9c3 100%);
+            padding: 20px 40px;
+            border-radius: 16px;
+            display: inline-block;
+            border: 2px solid #fbbf24;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* 音频卡片网格布局 */
+        .audio-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .audio-card {
+            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+            border-radius: 16px;
+            padding: 25px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.06);
+        }
+
+        .audio-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+            border-color: #f59e0b;
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #475569;
+            margin-bottom: 20px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #f1f5f9;
+        }
+
+        .card-image {
+            margin-bottom: 20px;
+        }
+
+        .card-image img {
             width: 100%;
-            max-width: 280px;
+            max-width: 350px;
             height: auto;
-            border-radius: 8px;
-            display: block;
-            margin: 0 auto;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
         }
 
-        /* 音频控件样式 */
-        .audio {
+        .audio-card:hover .card-image img {
+            transform: scale(1.02);
+        }
+
+        .card-audio {
             margin-top: 15px;
         }
 
-        .audio audio {
+        .card-audio audio {
             width: 100%;
             border-radius: 25px;
             outline: none;
         }
 
-        .audio audio::-webkit-media-controls-panel {
-            background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
+        .card-audio audio::-webkit-media-controls-panel {
+            background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
             border-radius: 25px;
+        }
+
+        /* 第二行样式 */
+        .audio-grid.second-row {
+            margin-bottom: 0;
         }
 
         /* 引用样式 */
         .citation {
-            margin-top: 40px;
-            padding: 25px;
+            margin-top: 60px;
+            padding: 30px;
             background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 100%);
             border-left: 6px solid #f59e0b;
-            border-radius: 12px;
+            border-radius: 16px;
             font-size: 0.95rem;
             color: #475569;
             line-height: 1.6;
@@ -236,6 +240,11 @@
                 margin: 20px;
                 padding: 30px;
             }
+            
+            .audio-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 25px;
+            }
         }
 
         @media (max-width: 768px) {
@@ -251,9 +260,19 @@
                 font-size: 1.1rem;
             }
 
-            th, td {
-                padding: 12px 8px;
-                font-size: 14px;
+            .file-section {
+                padding: 20px;
+                margin-bottom: 40px;
+            }
+
+            .file-title {
+                font-size: 22px;
+                padding: 15px 30px;
+            }
+
+            .audio-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
             }
 
             .btn {
@@ -263,11 +282,6 @@
                 width: 200px;
                 margin-left: auto;
                 margin-right: auto;
-            }
-
-            .id-cell {
-                font-size: 18px;
-                padding: 12px;
             }
         }
 
@@ -281,13 +295,17 @@
                 padding: 20px;
             }
             
-            th, td {
-                padding: 8px 4px;
-                font-size: 12px;
+            .file-section {
+                padding: 15px;
             }
             
-            .image img {
-                max-width: 200px;
+            .file-title {
+                font-size: 20px;
+                padding: 12px 20px;
+            }
+            
+            .audio-card {
+                padding: 20px;
             }
         }
 
@@ -303,9 +321,14 @@
             }
         }
 
-        .narrow-container {
-            animation: fadeInUp 0.8s ease-out;
+        .file-section {
+            animation: fadeInUp 0.6s ease-out;
         }
+
+        .file-section:nth-child(2) { animation-delay: 0.1s; }
+        .file-section:nth-child(3) { animation-delay: 0.2s; }
+        .file-section:nth-child(4) { animation-delay: 0.3s; }
+        .file-section:nth-child(5) { animation-delay: 0.4s; }
 
         /* 滚动条样式 */
         ::-webkit-scrollbar {
@@ -342,172 +365,188 @@
 
     <!-- 主要内容 -->
     <div class="narrow-container">
-        <div class="comparisons-desktop">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Noisy Signal</th>
-                        <th>Enhanced by TF-GridNet [1]</th>
-                        <th>Enhanced by LLaSE-G1 [2]</th>
-                        <th>Enhanced by AES-V2 [3]</th>
-                        <th>Enhanced by PASE (Ours)</th>
-                        <th>Clean Signal</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <!-- File ID 1 -->
-                    <tr>
-                        <td colspan="6" class="id-cell">File ID 1</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_1_Noisy.png" alt="Noisy 1">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_1_Noisy.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_1_TFGridNet.png" alt="TF-GridNet Enhanced 1">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_1_TFGridNet.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_1_LLaSE-G1.png" alt="LLaSE-G1 Enhanced 1">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_1_LLaSE-G1.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_1_AES-V2.png" alt="AES-V2 Enhanced 1">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_1_AES-V2.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_1_PASE(ours).png" alt="PASE Enhanced 1">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_1_PASE(ours).wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_1_Clean.png" alt="Clean 1">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_1_Clean.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- 其他文件ID部分保持不变，结构相同 -->
-                    <!-- File ID 2 -->
-                    <tr>
-                        <td colspan="6" class="id-cell">File ID 2</td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_2_Noisy.png" alt="Noisy 2">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_2_Noisy.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_2_TFGridNet.png" alt="TF-GridNet Enhanced 2">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_2_TFGridNet.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_2_LLaSE-G1.png" alt="LLaSE-G1 Enhanced 2">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_2_LLaSE-G1.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_2_AES-V2.png" alt="AES-V2 Enhanced 2">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_2_AES-V2.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_2_PASE(ours).png" alt="PASE Enhanced 2">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_2_PASE(ours).wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="image">
-                                <img src="audio_figs/fileid_2_Clean.png" alt="Clean 2">
-                            </div>
-                            <div class="audio">
-                                <audio controls>
-                                    <source src="audio_examples/fileid_2_Clean.wav" type="audio/wav">
-                                    Your browser does not support the audio element.
-                                </audio>
-                            </div>
-                        </td>
-                    </tr>
-
-                    <!-- File ID 3 到 5 的部分保持不变 -->
-                    <!-- ... -->
-
-                </tbody>
-            </table>
+        <!-- File ID 1 -->
+        <div class="file-section">
+            <div class="file-header">
+                <div class="file-title">File ID 1</div>
+            </div>
+            
+            <!-- 第一行：3个音频 -->
+            <div class="audio-grid">
+                <div class="audio-card">
+                    <div class="card-title">Noisy Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_1_Noisy.png" alt="Noisy 1">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_1_Noisy.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by TF-GridNet [1]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_1_TFGridNet.png" alt="TF-GridNet Enhanced 1">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_1_TFGridNet.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by LLaSE-G1 [2]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_1_LLaSE-G1.png" alt="LLaSE-G1 Enhanced 1">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_1_LLaSE-G1.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 第二行：3个音频 -->
+            <div class="audio-grid second-row">
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by AES-V2 [3]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_1_AES-V2.png" alt="AES-V2 Enhanced 1">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_1_AES-V2.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by PASE (Ours)</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_1_PASE(ours).png" alt="PASE Enhanced 1">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_1_PASE(ours).wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Clean Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_1_Clean.png" alt="Clean 1">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_1_Clean.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        <!-- File ID 2 -->
+        <div class="file-section">
+            <div class="file-header">
+                <div class="file-title">File ID 2</div>
+            </div>
+            
+            <div class="audio-grid">
+                <div class="audio-card">
+                    <div class="card-title">Noisy Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_2_Noisy.png" alt="Noisy 2">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_2_Noisy.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by TF-GridNet [1]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_2_TFGridNet.png" alt="TF-GridNet Enhanced 2">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_2_TFGridNet.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by LLaSE-G1 [2]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_2_LLaSE-G1.png" alt="LLaSE-G1 Enhanced 2">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_2_LLaSE-G1.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="audio-grid second-row">
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by AES-V2 [3]</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_2_AES-V2.png" alt="AES-V2 Enhanced 2">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_2_AES-V2.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Enhanced by PASE (Ours)</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_2_PASE(ours).png" alt="PASE Enhanced 2">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_2_PASE(ours).wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+                
+                <div class="audio-card">
+                    <div class="card-title">Clean Signal</div>
+                    <div class="card-image">
+                        <img src="audio_figs/fileid_2_Clean.png" alt="Clean 2">
+                    </div>
+                    <div class="card-audio">
+                        <audio controls>
+                            <source src="audio_examples/fileid_2_Clean.wav" type="audio/wav">
+                            Your browser does not support the audio element.
+                        </audio>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 其他File ID部分结构相同，可以继续添加 -->
+        <!-- File ID 3, 4, 5... -->
 
         <!-- 引用 -->
         <div class="citation">
